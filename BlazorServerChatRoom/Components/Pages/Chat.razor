@@ -1,0 +1,112 @@
+﻿@page "/chat/{ChatRoomId}"
+@inject NavigationManager Navigation
+@inject HttpClient httpClient
+@inject ChatRoomManager ChatRoomManager
+@inject ISnackbar Snackbar
+@inject IJSRuntime JSRuntime
+@rendermode InteractiveServer
+
+<MudContainer>
+    @if (connectionClosed && !IsConnected)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled">Your connection to the chatroom was closed due to inactivity.</MudAlert>
+    }
+    <MudGrid Justify="Justify.Center">
+        <div class="created-room-link">
+            <MudText Typo="Typo.body2" Class="text-center mr-2">
+                <i>Copy the link to share with friends!</i>
+            </MudText>
+            <MudIconButton Icon="@Icons.Material.Outlined.ContentCopy" Color="Color.Primary" @onclick="CopyToClipboard" />
+        </div>
+    </MudGrid>
+    <br />
+    <!-- User input and language selection -->
+    <MudGrid>
+        <!-- User input -->
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="userInput" Label="User" Required="true" />
+        </MudItem>
+
+        <!-- Language selection -->
+        <MudItem xs="12" sm="6">
+            <MudSelect @bind-Value="receivedLanguage" Label="Language">
+                @foreach (string language in LanguageMap.Languages.Keys)
+                {
+                    <MudSelectItem Value="@language">@language</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+    </MudGrid>
+
+    <br />
+
+    <!-- Scrollable message section -->
+    <div class="scroll-section">
+        <MudPaper Elevation="0" Class="d-flex flex-column justify-between py-4 message-paper">
+            <!-- Message list -->
+            <MudText Typo="Typo.h3" Align="Align.Center">
+                <MudList Class="message-list">
+                    @foreach (var message in messages)
+                    {
+                        <MudListItem>@message</MudListItem>
+                    }
+                </MudList>
+            </MudText>
+        </MudPaper>
+    </div>
+
+    <!-- Message input and send button -->
+    <MudGrid>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="messageInput" T="string" Label="Message" Variant="Variant.Outlined" Required="true" />
+        </MudItem>
+
+        <MudItem>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large"
+                       OnClick="@Send" Class="full-width-button " Disabled="@(!IsConnected)">
+                <MudIcon Icon="@Icons.Material.Filled.Send" />
+                Send
+            </MudButton>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+<style>
+    .scroll-section {
+        height: 450px;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .created-room-link {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .message-list {
+        word-wrap: break-word;
+    }
+
+    .message-paper {
+    background-color: beige;
+    height: calc(100vh - 250px);
+}
+</style>
+
+<script>
+    function convertUTCToLocalTime(utcTime) {
+        const date = new Date(utcTime);
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        };
+        return date.toLocaleString(options);
+    }
+</script>
+

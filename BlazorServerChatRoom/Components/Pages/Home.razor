@@ -1,0 +1,92 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+@inject ChatRoomManager ChatRoomManager
+@rendermode InteractiveServer
+
+<MudContainer Class="home-container" Fluid="true" AlignCenter="true">
+    <MudText Typo="Typo.h5" Class="text-center-bold mb-4">
+        @Texts[currentIndex]
+    </MudText>
+    <MudText Typo="Typo.subtitle1" Class="text-center mb-4">
+        <i>Chat with your friends in any language, all for free!</i>
+    </MudText>
+    <MudCard Class="larger-card">
+        <MudCardContent>
+             <MudText Typo="Typo.body1" Class="text-center">
+                Rooms currently in use = @ChatRoomManager.GetNumberOfCurrentActiveRooms()/@MAX_NUM_OF_ROOMS.
+            </MudText>
+
+            @if (IsMaxChatRoomsReached())
+            {
+                <MudText Typo="Typo.body1" Class="text-center mb-4">
+                    All rooms are currently full.
+                </MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.body1" Class="text-center mb-4">
+                    Click below to create a room.
+                </MudText>
+            }
+            <div class="button-container">
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large"
+                           OnClick="@CreateChatroom" Class="full-width-button mb-3" Disabled="@IsMaxChatRoomsReached()">
+                    <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-2" />
+                    Start Chatting
+                </MudButton>
+            </div>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+
+<style>
+    .home-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 16px;
+    }
+
+    .larger-card {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .full-width-button {
+        width: 100%;
+    }
+
+    .text-center-bold {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+
+    .mb-3 {
+        margin-bottom: 0.75rem;
+    }
+
+    .mr-2 {
+        margin-right: 0.5rem;
+    }
+</style>
