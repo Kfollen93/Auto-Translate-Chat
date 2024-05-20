@@ -14,7 +14,7 @@ namespace BlazorServerChatRoom.Components.Pages
         private int currentIndex = 0;
         private string createdChatroomId = string.Empty;
         private System.Timers.Timer timer = new();
-        private const int MAX_NUM_OF_ROOMS = 1;
+        private const int MAX_NUM_OF_ROOMS = 2;
 
         protected override void OnInitialized()
         {
