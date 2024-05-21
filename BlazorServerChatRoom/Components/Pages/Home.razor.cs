@@ -2,7 +2,7 @@
 
 namespace BlazorServerChatRoom.Components.Pages
 {
-    public partial class Home
+    public partial class Home : IDisposable
     {
         private readonly string[] Texts =
         [
