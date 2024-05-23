@@ -44,16 +44,24 @@ As someone who primarily works on API backend tasks in .NET/C#, I wanted to expl
 - **MudBlazor (UI)**
 - **Azure App Service**
 
-<!-- <p align="center"><strong>Screenshots</strong></p>
+## Example Chat
+
+<p align="center"><strong>Screenshots</strong></p>
 
 <p align="center">
-  <img src=".placeholder.png" alt="placeholder" width="800" height="500"/>
+  <img src="./readme_images/home.png" alt="home" width="375" height="300"/>
 </p>
 
-<p align="center"><i>Placeholder</i></p>
+<p align="center"><i>Create a room to begin chatting and then share the link with your friends.</i></p>
 
 <p align="center">
-  <img src=".placeholder.png" alt="placeholder" width="800" height="600"/>
+  <img src="./readme_images/Eng.png" alt="english" width="475" height="400"/>
 </p>
 
-<p align="center"><i>Placeholder</i></p> -->
+<p align="center"><i>An English user sending and receiving messages from a German user.</i></p>
+
+<p align="center">
+  <img src="./readme_images/Ger.png" alt="german" width="475" height="400"/>
+</p>
+
+<p align="center"><i>A German user sending and receiving messages from an English user.</i></p>
